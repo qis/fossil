@@ -261,6 +261,15 @@ mkdir example
 curl -L https://github.com/qis/fossil/archive/refs/heads/master.tar.gz | tar xzf - -C example -m --strip-components=1
 sed 's/project_name/example/g' -i example/.clang-format example/CMakeLists.txt
 
-# Build project.
-make -C example run
+# Enter project directory.
+cd example
+
+# Build in debug mode and run executable.
+make run
+
+# Build in release mode.
+make
+
+# Open directory in nvim(1) and press F5 to debug.
+nvim src/main.cpp
 ```
