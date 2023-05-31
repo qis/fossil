@@ -11,7 +11,6 @@
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_C_COMPILER": "/opt/llvm/bin/clang",
         "CMAKE_CXX_COMPILER": "/opt/llvm/bin/clang++",
         "CMAKE_ASM_COMPILER": "/opt/llvm/bin/clang",
@@ -34,8 +33,10 @@
         "CMAKE_EXE_LINKER_FLAGS_RELEASE_INIT": "-s -static-libstdc++",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE": true,
         "CMAKE_POSITION_INDEPENDENT_CODE": true,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
         "CMAKE_CXX_EXTENSIONS": false,
-        "CMAKE_C_EXTENSIONS": false
+        "CMAKE_C_EXTENSIONS": false,
+        "BOOST_ROOT": "/opt/boost"
       },
       "warnings": {
         "dev": false

@@ -179,6 +179,48 @@ EOF
 chmod 0755 /etc/profile.d/llvm.sh
 . /etc/profile.d/llvm.sh
 
+# Install Boost.
+curl -L https://github.com/boostorg/boost/releases/download/boost-1.82.0/boost-1.82.0.tar.xz -o boost.tar.xz
+
+mkdir boost
+tar xf boost.tar.xz -C boost -m --strip-components=1
+
+cmake -GNinja -Wno-dev \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="/opt/boost" \
+  -DCMAKE_C_COMPILER="/opt/llvm/bin/clang" \
+  -DCMAKE_CXX_COMPILER="/opt/llvm/bin/clang++" \
+  -DCMAKE_ASM_COMPILER="/opt/llvm/bin/clang" \
+  -DCMAKE_AR="/opt/llvm/bin/llvm-ar" \
+  -DCMAKE_NM="/opt/llvm/bin/llvm-nm" \
+  -DCMAKE_LINKER="/opt/llvm/bin/lld" \
+  -DCMAKE_RANLIB="/opt/llvm/bin/llvm-ranlib" \
+  -DCMAKE_OBJCOPY="/opt/llvm/bin/llvm-objcopy" \
+  -DCMAKE_OBJDUMP="/opt/llvm/bin/llvm-objdump" \
+  -DCMAKE_STRIP="/opt/llvm/bin/llvm-strip" \
+  -DCMAKE_C_FLAGS_INIT="-fdiagnostics-absolute-paths" \
+  -DCMAKE_CXX_FLAGS_INIT="-fdiagnostics-absolute-paths -fexperimental-library" \
+  -DCMAKE_C_FLAGS_RELEASE_INIT="-fmerge-all-constants" \
+  -DCMAKE_CXX_FLAGS_RELEASE_INIT="-fmerge-all-constants" \
+  -DCMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT="-s -static-libstdc++" \
+  -DCMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT="-s -static-libstdc++" \
+  -DCMAKE_EXE_LINKER_FLAGS_RELEASE_INIT="-s -static-libstdc++" \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DCMAKE_C_EXTENSIONS=OFF \
+  -DCMAKE_CXX_EXTENSIONS=OFF \
+  -DCMAKE_CXX_STANDARD=20 \
+  -DBOOST_ENABLE_MPI=OFF \
+  -DBOOST_ENABLE_PYTHON=OFF \
+  -DBOOST_INSTALL_LAYOUT="system" \
+  -DBOOST_IOSTREAMS_ENABLE_ZLIB=ON \
+  -DBOOST_IOSTREAMS_ENABLE_LZMA=ON \
+  -DBOOST_LOCALE_ENABLE_ICONV=ON \
+  -DBOOST_LOCALE_ENABLE_ICU=OFF \
+  -DBOOST_LOCALE_ENABLE_STD=OFF \
+  -B boost-build boost
+
+ninja -C boost-build install
+
 # Install Neovim.
 curl -L https://github.com/neovim/neovim/archive/refs/tags/stable.tar.gz -o nvim.tar.gz
 
