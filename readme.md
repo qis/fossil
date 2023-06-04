@@ -183,7 +183,7 @@ chmod 0755 /etc/profile.d/llvm.sh
 curl -L https://github.com/boostorg/boost/releases/download/boost-1.82.0/boost-1.82.0.tar.xz -o boost.tar.xz
 
 mkdir boost
-tar xf boost.tar.xz -C boost -m --strip-components=1
+XZ_OPT="-vT8" tar xf boost.tar.xz -C boost -m --strip-components=1
 
 cmake -GNinja -Wno-dev \
   -DCMAKE_BUILD_TYPE=Release \
@@ -301,7 +301,7 @@ nvim
 # Create project.
 mkdir example
 curl -L https://github.com/qis/fossil/archive/refs/heads/master.tar.gz | tar xzf - -C example -m --strip-components=1
-sed 's/project_name/example/g' -i example/.clang-format example/CMakeLists.txt
+sed 's/fossil/example/g' -i example/.clang-format example/CMakeLists.txt
 
 # Enter project directory.
 cd example
