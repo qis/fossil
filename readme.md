@@ -305,7 +305,7 @@ mkdir "${PROJECT}"
 curl -L https://github.com/qis/fossil/archive/refs/heads/master.tar.gz | \
   tar xzf - -C "${PROJECT}" -m --strip-components=1
 
-sed "s/fossil/${PROJECT}/g" -i example/.clang-format example/CMakeLists.txt
+sed "s/fossil/${PROJECT}/g" -i "${PROJECT}/.clang-format" "${PROJECT}/CMakeLists.txt"
 
 # Enter project directory.
 cd "${PROJECT}"
