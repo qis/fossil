@@ -299,12 +299,16 @@ nvim
 
 ```sh
 # Create project.
-mkdir example
-curl -L https://github.com/qis/fossil/archive/refs/heads/master.tar.gz | tar xzf - -C example -m --strip-components=1
-sed 's/fossil/example/g' -i example/.clang-format example/CMakeLists.txt
+PROJECT=example
+mkdir "${PROJECT}"
+
+curl -L https://github.com/qis/fossil/archive/refs/heads/master.tar.gz | \
+  tar xzf - -C "${PROJECT}" -m --strip-components=1
+
+sed "s/fossil/${PROJECT}/g" -i example/.clang-format example/CMakeLists.txt
 
 # Enter project directory.
-cd example
+cd "${PROJECT}"
 
 # Build in debug mode and run executable.
 make run
